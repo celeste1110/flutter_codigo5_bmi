@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_bmi/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-const kTabSelectedColor=Colors.pinkAccent;
-const kCardColor=Color(0xff1F232C);
-class InputPage extends StatelessWidget {
-  const InputPage({Key? key}) : super(key: key);
+const kTabSelectedColor = Color(0xff232f39);
+const kCardColor = Color(0xff1F232C);
+enum Gender { male, female }
+
+class InputPage extends StatefulWidget {
+  @override
+  State<InputPage> createState() => _InputPageState();
+}
+
+class _InputPageState extends State<InputPage> {
+  Gender selectedOption = Gender.male;
+  int height=165;
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +30,32 @@ class InputPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    color: kCardColor,
-
+                    color: selectedOption == Gender.male
+                        ? kTabSelectedColor
+                        : kCardColor,
                     chilCard: IconContent(
-                      icono:  FontAwesomeIcons.mars,
-                       texto: 'MALE',
+                      icono: FontAwesomeIcons.mars,
+                      texto: 'MALE',
                     ),
+                    onTab: () {
+                      selectedOption = Gender.male;
+                      setState(() {});
+                    },
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    color: kCardColor,
+                    color: selectedOption == Gender.female
+                        ? kTabSelectedColor
+                        : kCardColor,
                     chilCard: IconContent(
-                      icono:  FontAwesomeIcons.venus,
-                       texto: 'FEMALE',
+                      icono: FontAwesomeIcons.venus,
+                      texto: 'FEMALE',
                     ),
+                    onTab: () {
+                      selectedOption = Gender.female;
+                      setState(() {});
+                    },
                   ),
                 ),
               ],
@@ -48,7 +67,23 @@ class InputPage extends StatelessWidget {
                 Expanded(
                   child: ReusableCard(
                     color: kCardColor,
-                    chilCard: Container(),
+                    chilCard: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('HEIGTH'),
+                        Slider(
+                          value: height.toDouble(),
+                          min:0,
+                          max:200,
+                          onChanged: (double valueSlider){
+                            height=valueSlider.round();
+                            setState(() {
+
+                            });
+                          }
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -91,5 +126,3 @@ class InputPage extends StatelessWidget {
     );
   }
 }
-
-
