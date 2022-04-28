@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_bmi/bmi_brain.dart';
 import 'package:flutter_codigo5_bmi/widgets.dart';
 
 class ResultPage extends StatelessWidget {
-  const ResultPage({Key? key}) : super(key: key);
+  int height;
+  int weight;
 
+  ResultPage({required this.height,required this.weight});
+  BMIBrain? bmibrain;
   @override
   Widget build(BuildContext context) {
+    bmibrain=BMIBrain(weight: weight, height: height);
     return Scaffold(
       appBar: AppBar(
         title: Text('BMI'),
@@ -31,7 +36,7 @@ class ResultPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Normal',
+                    bmibrain!.estado(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 22.0,
@@ -40,7 +45,7 @@ class ResultPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '24',
+                    bmibrain!.calculaterBMI().toStringAsFixed(2),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 70.0,
@@ -48,7 +53,7 @@ class ResultPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Debes de comer mas',
+                    bmibrain!.mensaje(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 18.0,
